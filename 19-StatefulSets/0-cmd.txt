@@ -1,0 +1,11 @@
+kubectl exec --stdin --tty pod-mysql-client -- sh
+
+mysql -p$MYSQL_PASSWORD -h set-mysql-0.svc-mysql-h
+
+
+select @@hostname;
+show variables where Variable_name like '%host%';
+
+
+kubectl exec --stdin --tty mysql-0 -- sh
+

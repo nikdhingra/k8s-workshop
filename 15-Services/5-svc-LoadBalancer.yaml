@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-svc-app-webcolor
+  labels:
+    app: loadbalancer-svc-app-webcolor
+spec:
+  selector:
+    app: app-webcolor-svc   # Connect to PODs with that label
+  type: LoadBalancer        # Will provision cloud load balancer (or metallb)
+  ports:
+  - port: 9000              # Port that cloud load balacer listens on
+    # By default and for convenience, the `targetPort` is set to
+    # the same value as the `port` field.  
+    targetPort: 9000        # Port app listens on in Pods/containers
+    protocol: TCP

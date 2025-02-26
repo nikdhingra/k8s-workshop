@@ -1,0 +1,38 @@
+sudo cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep service-cluster-ip-range
+
+sudo cat /etc/kubernetes/manifests/kube-controller-manager.yaml | grep cluster-cidr
+
+kubectl describe nodes | grep PodCIDR
+
+kubectl get configmap -n kube-system kube-proxy -o yaml | grep clusterCIDR
+
+sudo systemctl cat kubelet.service
+
+sudo cat /var/lib/kubelet/config.yaml
+
+kubectl describe nodes k8s-m1 | grep PodCIDR
+
+sudo ls -la /etc/cni/net.d/
+
+---
+
+kubectl exec -i -t pod-dnsutils -- nslookup kubernetes.default
+kubectl exec -ti dnsutils -- cat /etc/resolv.conf
+
+kubectl describe configmaps -n kube-system coredns
+
+
+kubectl get configmap -n kube-system kube-proxy -o yaml
+
+
+kubectl exec -n kube-system \
+$(kubectl get po -n kube-system --selector name=weave-net -o jsonpath='{.items[0].metadata.name}') \
+-c weave -- /home/weave/weave --local status
+
+kubectl exec -n kube-system \
+$(kubectl get po -n kube-system --selector name=weave-net -o jsonpath='{.items[0].metadata.name}') \
+-c weave -- env | grep ^IPALLOC_RANGE
+
+kubectl exec -n kube-system \
+$(kubectl get po -n kube-system --selector name=weave-net -o jsonpath='{.items[0].metadata.name}') \
+-c weave -- cat /home/weave/launch.sh | grep ^IPALLOC_RANGE

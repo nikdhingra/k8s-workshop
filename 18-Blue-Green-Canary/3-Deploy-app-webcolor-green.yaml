@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-webcolor-green
+  name: app-webcolor-green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-webcolor-green
+  template:
+    metadata:
+      labels:
+        app: app-webcolor-green
+        version: v2
+        code: app-webcolor
+    spec:
+      containers:
+      - image: ghcr.io/wiktorvip/app-webcolor:green
+        name: app-webcolor
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000

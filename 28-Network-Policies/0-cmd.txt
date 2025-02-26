@@ -1,0 +1,9 @@
+
+https://editor.networkpolicy.io/
+
+
+kubectl exec --stdin --tty pod-mysql-client -- /bin/sh
+
+mysql -p$MYSQL_PASSWORD
+
+

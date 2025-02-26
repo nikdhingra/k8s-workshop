@@ -1,0 +1,87 @@
+# List all avaiable repos on cluster
+helm repo list
+
+# List installed applications 
+helm list -A
+
+# Add the repo
+helm repo add app-webcolor https://wiktorvip.github.io/app-webcolor
+
+# Update repo
+helm repo update
+
+# Search in repo
+helm search repo app-webcolor
+
+# Check Values
+helm show values app-webcolor/app-webcolor
+
+# install app
+helm install app-webcolor app-webcolor/app-webcolor
+
+---------------------------------------------------------------------------
+helm show values app-webcolor/app-webcolor > dev_values.yaml
+helm show values app-webcolor/app-webcolor > prod_values.yaml
+
+
+helm install app-webcolor app-webcolor/app-webcolor --values dev_values.yaml --namespace dev --create-namespace
+
+helm install app-webcolor app-webcolor/app-webcolor --values dev_values.yaml --namespace prod --create-namespace
+
+helm uninstall app-webcolor --namespace dev
+helm uninstall app-webcolor --namespace prod
+
+---------------------------------------------------------------------------
+
+
+helm repo add examples https://helm.github.io/examples
+
+helm show values examples/hello-world
+
+helm install hello-world examples/hello-world --values values.yaml
+
+
+---------------------------------------------------------------------------
+
+# List all available releases in the current namespace:
+helm list
+
+#List all available releases across all namespaces:
+helm list --all-namespaces
+
+# List all releases in a specific namespace:
+helm list --namespace [namespace]
+
+# List all releases in a specific output format:
+helm list --output [format]
+
+# Apply a filter to the list of releases using regular expressions:
+helm list --filter '[expression]'
+
+# See the status of a specific release:
+helm status [release]
+
+# Display the release history:
+helm history [release]
+
+
+# nstall an app:
+helm install [app-name] [chart]
+
+# Install an app in a specific namespace:
+helm install [app-name] [chart] --namespace [namespace]
+
+# Override the default values with those specified in a file of your choice:
+helm install [app-name] [chart] --values [yaml-file/url]
+
+# Run a test installation to validate and verify the chart:
+helm install [app-name] --dry-run --debug
+
+# Uninstall a release:
+helm uninstall [release]
+
+# Upgrade an app:
+helm upgrade [release] [chart]
+
+# Rollback a release:
+helm rollback [release] [revision]

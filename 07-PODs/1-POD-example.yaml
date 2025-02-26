@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod             # type of K8s object: Pod
+metadata:
+  name: pod-example   # name of pod
+  labels:             # labels
+    app: nginx
+    env: prod
+spec:
+  containers:
+  - image: nginx      # image name:image version, nginx downloads from DockerHub
+    name: nginx
+

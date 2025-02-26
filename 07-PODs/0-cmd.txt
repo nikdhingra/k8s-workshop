@@ -1,0 +1,52 @@
+kubectl run nginx --image=nginx
+
+kubectl exec pod-command -- printenv
+kubectl exec --stdin --tty pod-command -- /bin/sh
+
+----------------------------------------------------------------------------
+
+kubectl apply -f 1-POD-example.yaml
+k get pod pod-example -o yaml
+k describe pod pod-example
+k logs pod-multi
+
+----------------------------------------------------------------------------
+
+Logs:
+
+kubectl logs <POD name>
+Inspect directory: /var/log/pods
+crictl logs f43905d40cae2
+
+----------------------------------------------------------------------------
+kubectl exec --namespace=kube-public curl -- wget -qO- http://webapp-service.default.svc.cluster.local:8080/crash
+
+for i in {1..20}; do
+   kubectl exec --namespace=kube-public curl -- sh -c 'test=`wget -qO- -T 2  http://webapp-service.default.svc.cluster.local:8080/ready 2>&1` && echo "$test OK" || echo "Failed"';
+   echo ""
+done
+
+nohup kubectl exec --namespace=kube-public curl -- wget -qO- http://webapp-service.default.svc.cluster.local:8080/freeze &
+
+----------------------------------------------------------------------------
+
+# Show a list of pods
+kubectl get po
+
+# Show a detailed list of pods
+kubectl get po -o wide
+
+# Show detailed pod state
+kubectl describe pod [pod_name]
+
+# Show pods running on a node
+kubectl get pods -o wide | grep [node_name]
+
+# Show pod cpu/memory usage
+kubectl top pod
+
+# Delete a pod
+kubectl delete pod [pod_name]
+
+# Get a shell on a single-container pod
+kubectl exec -it [pod_name] /bin/sh

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-app-webcolor-podaffinity
+spec:
+  selector:
+    matchLabels:
+      app: app-webcolor-podaffinity
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: app-webcolor-podaffinity
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - app-webcolor-podaffinity
+            topologyKey: "kubernetes.io/hostname"
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - store
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: app-webcolor
+        image: ghcr.io/wiktorvip/app-webcolor
